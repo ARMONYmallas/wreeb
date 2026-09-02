@@ -148,3 +148,45 @@ export const customerDetailsSchema = z.object({
 export const noteSchema = z.object({
   content: z.string().trim().min(1, 'Escribe la nota').max(2000),
 });
+
+// ── Formulario del cliente ──────────────────────────────────────────────────
+/**
+ * Esquema del formulario en el navegador. A diferencia de `appointmentSchema`,
+ * no transforma valores: React Hook Form necesita que la entrada y la salida
+ * tengan la misma forma. La normalización real ocurre en el servidor.
+ */
+export const bookingFormSchema = z.object({
+  spaceType: z.enum(SPACE_TYPES, {
+    errorMap: () => ({ message: 'Elige qué necesitas proteger' }),
+  }),
+  serviceType: z.enum(SERVICE_TYPES, {
+    errorMap: () => ({ message: 'Elige qué necesitas' }),
+  }),
+  regionCode: z.string().min(1, 'Elige tu región'),
+  commune: z.string().min(1, 'Elige tu comuna'),
+  preferredDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Elige una fecha'),
+  timeSlotId: z.string().uuid('Elige un horario'),
+  name: z.string().trim().min(2, 'Escribe tu nombre').max(80, 'El nombre es demasiado largo'),
+  phone: z
+    .string()
+    .trim()
+    .min(8, 'Escribe tu número de WhatsApp')
+    .refine((v) => normalizePhone(v) !== null, 'Revisa el número, por ejemplo +56 9 1234 5678'),
+  email: z
+    .string()
+    .trim()
+    .max(120)
+    .refine((v) => v === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), 'Revisa el correo'),
+  consent: z.boolean().refine((v) => v === true, {
+    message: 'Necesitamos tu autorización para gestionar la solicitud',
+  }),
+  website: z.string().max(0).optional(),
+});
+
+export type BookingFormValues = z.infer<typeof bookingFormSchema>;
+
+export const STEP_FIELDS: Record<1 | 2 | 3, (keyof BookingFormValues)[]> = {
+  1: ['spaceType', 'serviceType'],
+  2: ['regionCode', 'commune'],
+  3: ['preferredDate', 'timeSlotId', 'name', 'phone', 'email', 'consent'],
+};

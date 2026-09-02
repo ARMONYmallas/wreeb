@@ -642,6 +642,38 @@ create policy events_admin on public.appointment_events
 -- rate_limits queda sin políticas: sólo accesible por service role / RPC.
 
 -- ---------------------------------------------------------------------------
+-- Privilegios de tabla
+--
+-- No dependemos de los privilegios por defecto del proyecto: los declaramos
+-- explícitamente. `anon` no tiene ningún privilegio sobre las tablas; los
+-- administradores acceden como `authenticated` y las políticas RLS de arriba
+-- deciden qué ven.
+-- ---------------------------------------------------------------------------
+grant usage on schema public to anon, authenticated, service_role;
+
+revoke all on all tables in schema public from anon;
+revoke all on all sequences in schema public from anon;
+
+grant select, insert, update, delete on
+  public.time_slots,
+  public.weekly_availability,
+  public.availability_overrides,
+  public.appointments,
+  public.appointment_photos,
+  public.admin_notes,
+  public.appointment_events
+to authenticated;
+
+grant select on public.admins to authenticated;
+
+-- rate_limits sólo lo toca el servidor.
+revoke all on public.rate_limits from anon, authenticated;
+grant all on public.rate_limits to service_role;
+
+grant all on all tables in schema public to service_role;
+grant all on all sequences in schema public to service_role;
+
+-- ---------------------------------------------------------------------------
 -- Permisos de ejecución
 -- ---------------------------------------------------------------------------
 revoke all on function public.slot_remaining(date, uuid) from public, anon, authenticated;

@@ -54,7 +54,7 @@ export const business = {
    * comunica siempre como "según disponibilidad", nunca como cobertura cerrada.
    */
   coverage: {
-    mainRegions: ['Región Metropolitana de Santiago'],
+    mainRegions: ['Región Metropolitana de Santiago'] as string[],
     otherRegionsNote: 'Otras regiones según disponibilidad. Consúltanos por WhatsApp.',
   },
 
