@@ -3,7 +3,6 @@
 import { useMemo, useState } from 'react';
 import { CalendarX2, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import {
-  DAY_NAMES_SHORT,
   addMonths,
   dayOfWeek,
   daysInMonth,
@@ -232,5 +231,3 @@ function buildMonthCells(monthISO: string): (string | null)[] {
   while (cells.length % 7 !== 0) cells.push(null);
   return cells;
 }
-
-export { DAY_NAMES_SHORT };

@@ -38,7 +38,22 @@ export type GalleryItem = {
 };
 
 export const GALLERY_ITEMS: GalleryItem[] = [
-  // Pendiente: fotografías reales de ARMONY.
+  // Pendiente: fotografías reales de ARMONY. Ejemplo de una entrada:
+  //
+  // {
+  //   id: 'balcon-nunoa-01',
+  //   category: 'balcones',
+  //   src: '/trabajos/balcon-nunoa-01.jpg',
+  //   alt: 'Malla de seguridad instalada en el balcón de un departamento',
+  //   commune: 'Ñuñoa',
+  //   width: 1600,
+  //   height: 1200,
+  //   // Sólo si existe material real del antes y del después:
+  //   before: {
+  //     src: '/trabajos/balcon-nunoa-01-antes.jpg',
+  //     alt: 'El mismo balcón antes de la instalación',
+  //   },
+  // },
 ];
 
 export const hasGallery = GALLERY_ITEMS.length > 0;

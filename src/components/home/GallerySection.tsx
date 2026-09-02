@@ -148,8 +148,18 @@ function Lightbox({
   onNavigate: (i: number) => void;
 }) {
   const item = items[index];
-  const prev = () => onNavigate((index - 1 + items.length) % items.length);
-  const next = () => onNavigate((index + 1) % items.length);
+  // Sólo se ofrece el antes/después cuando existe material real de ambos.
+  const [showBefore, setShowBefore] = useState(false);
+  const shown = showBefore && item.before ? item.before : { src: item.src, alt: item.alt };
+
+  const prev = () => {
+    setShowBefore(false);
+    onNavigate((index - 1 + items.length) % items.length);
+  };
+  const next = () => {
+    setShowBefore(false);
+    onNavigate((index + 1) % items.length);
+  };
 
   return (
     <div
@@ -197,10 +207,40 @@ function Lightbox({
 
       <figure className="max-h-full w-full max-w-3xl">
         <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-ink">
-          <Image src={item.src} alt={item.alt} fill sizes="100vw" className="object-contain" />
+          <Image src={shown.src} alt={shown.alt} fill sizes="100vw" className="object-contain" />
         </div>
+
+        {item.before && (
+          <div
+            role="group"
+            aria-label="Comparar antes y después"
+            className="mt-4 flex justify-center gap-1 rounded-full bg-white/12 p-1"
+            style={{ width: 'fit-content', marginInline: 'auto' }}
+          >
+            {[
+              { label: 'Antes', value: true },
+              { label: 'Después', value: false },
+            ].map((option) => (
+              <button
+                key={option.label}
+                type="button"
+                onClick={() => setShowBefore(option.value)}
+                aria-pressed={showBefore === option.value}
+                className={cn(
+                  'h-9 rounded-full px-5 text-sm font-semibold transition-colors',
+                  showBefore === option.value
+                    ? 'bg-white text-ink'
+                    : 'text-white/85 hover:text-white',
+                )}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        )}
+
         <figcaption className="mt-3 text-center text-sm text-white/80">
-          {item.alt}
+          {shown.alt}
           {item.commune && ` · ${item.commune}`}
         </figcaption>
       </figure>
