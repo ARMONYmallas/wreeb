@@ -87,7 +87,10 @@ export function serviceSchema({
     serviceType: name,
     url: absoluteUrl(path),
     provider: { '@id': absoluteUrl('/#negocio') },
-    areaServed: business.coverage.mainRegions.map((n) => ({ '@type': 'AdministrativeArea', name: n })),
+    areaServed: business.coverage.mainRegions.map((n) => ({
+      '@type': 'AdministrativeArea',
+      name: n,
+    })),
   };
 }
 

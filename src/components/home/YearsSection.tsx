@@ -10,7 +10,8 @@ const PILLARS = [
   {
     icon: MessagesSquare,
     title: 'Asesoría',
-    description: 'Revisamos el espacio contigo y te explicamos con claridad qué conviene en tu caso.',
+    description:
+      'Revisamos el espacio contigo y te explicamos con claridad qué conviene en tu caso.',
   },
   {
     icon: Wrench,

@@ -44,9 +44,7 @@ export function AvailabilityPicker({
   const firstAvailable = days[0]?.date;
   const lastAvailable = days[days.length - 1]?.date;
 
-  const [month, setMonth] = useState(() =>
-    startOfMonth(selectedDate || firstAvailable || today),
-  );
+  const [month, setMonth] = useState(() => startOfMonth(selectedDate || firstAvailable || today));
 
   const monthCells = useMemo(() => buildMonthCells(month), [month]);
   const selectedDay = selectedDate ? byDate.get(selectedDate) : undefined;
@@ -117,7 +115,10 @@ export function AvailabilityPicker({
 
         <div className="mt-4 grid grid-cols-7 gap-1" aria-hidden="true">
           {['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'].map((d) => (
-            <span key={d} className="py-1 text-center text-[0.6875rem] font-semibold text-muted-soft">
+            <span
+              key={d}
+              className="py-1 text-center text-[0.6875rem] font-semibold text-muted-soft"
+            >
               {d}
             </span>
           ))}
@@ -157,7 +158,10 @@ export function AvailabilityPicker({
         </div>
 
         <p className="mt-4 flex items-center gap-2 border-t border-line pt-3 text-xs text-muted">
-          <span aria-hidden="true" className="h-2.5 w-2.5 rounded bg-brand-50 ring-1 ring-brand-200" />
+          <span
+            aria-hidden="true"
+            className="h-2.5 w-2.5 rounded bg-brand-50 ring-1 ring-brand-200"
+          />
           Días con horarios disponibles
         </p>
       </div>
@@ -167,7 +171,8 @@ export function AvailabilityPicker({
           <p className="text-[0.9375rem] font-semibold text-ink">
             Horarios para el{' '}
             <span className="text-brand-700">
-              {relativeDayLabel(selectedDay.date)?.toLowerCase() ?? formatLongDate(selectedDay.date)}
+              {relativeDayLabel(selectedDay.date)?.toLowerCase() ??
+                formatLongDate(selectedDay.date)}
             </span>
           </p>
           <div className="mt-3 grid gap-2.5 sm:grid-cols-2">

@@ -8,7 +8,8 @@ const CHECKS = [
   {
     icon: Gauge,
     title: 'Tensión',
-    description: 'Con el tiempo una instalación puede perder firmeza sin que sea evidente a simple vista.',
+    description:
+      'Con el tiempo una instalación puede perder firmeza sin que sea evidente a simple vista.',
   },
   {
     icon: Anchor,

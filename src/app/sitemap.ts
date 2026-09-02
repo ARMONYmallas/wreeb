@@ -5,7 +5,11 @@ import { hasGallery } from '@/config/gallery';
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
-  const routes: { path: string; priority: number; changeFrequency: 'weekly' | 'monthly' | 'yearly' }[] = [
+  const routes: {
+    path: string;
+    priority: number;
+    changeFrequency: 'weekly' | 'monthly' | 'yearly';
+  }[] = [
     { path: '/', priority: 1, changeFrequency: 'weekly' },
     { path: '/servicios', priority: 0.9, changeFrequency: 'monthly' },
     { path: '/mallas-seguridad-santiago', priority: 0.9, changeFrequency: 'monthly' },

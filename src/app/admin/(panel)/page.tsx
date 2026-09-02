@@ -11,10 +11,30 @@ export default async function AdminDashboard() {
   const { newAppointments, todayVisits, upcoming, pendingCount } = await getDashboardData();
 
   const stats = [
-    { label: 'Solicitudes nuevas', value: newAppointments.length, icon: Inbox, href: '/admin/solicitudes?estado=new' },
-    { label: 'Visitas de hoy', value: todayVisits.length, icon: CalendarCheck, href: '/admin/agenda?rango=today' },
-    { label: 'Próximas visitas', value: upcoming.length, icon: CalendarDays, href: '/admin/agenda?rango=week' },
-    { label: 'Por contactar', value: pendingCount, icon: PhoneCall, href: '/admin/solicitudes?estado=new' },
+    {
+      label: 'Solicitudes nuevas',
+      value: newAppointments.length,
+      icon: Inbox,
+      href: '/admin/solicitudes?estado=new',
+    },
+    {
+      label: 'Visitas de hoy',
+      value: todayVisits.length,
+      icon: CalendarCheck,
+      href: '/admin/agenda?rango=today',
+    },
+    {
+      label: 'Próximas visitas',
+      value: upcoming.length,
+      icon: CalendarDays,
+      href: '/admin/agenda?rango=week',
+    },
+    {
+      label: 'Por contactar',
+      value: pendingCount,
+      icon: PhoneCall,
+      href: '/admin/solicitudes?estado=new',
+    },
   ];
 
   return (
@@ -29,7 +49,9 @@ export default async function AdminDashboard() {
             className="rounded-2xl border border-line bg-white p-4 transition-colors hover:border-brand-200 hover:bg-brand-50"
           >
             <stat.icon className="h-5 w-5 text-brand-600" aria-hidden="true" strokeWidth={1.8} />
-            <p className="mt-3 font-display text-3xl leading-none font-bold text-ink">{stat.value}</p>
+            <p className="mt-3 font-display text-3xl leading-none font-bold text-ink">
+              {stat.value}
+            </p>
             <p className="mt-1.5 text-xs leading-tight font-medium text-muted">{stat.label}</p>
           </Link>
         ))}
@@ -38,7 +60,12 @@ export default async function AdminDashboard() {
       {/* Accesos rápidos: lo que ARMONY necesita hacer desde el celular. */}
       <div className="grid gap-2.5 sm:grid-cols-3">
         <QuickAction href="/admin/agenda" icon={CalendarDays} label="Ver agenda" />
-        <QuickAction href="/admin/disponibilidad" icon={CalendarRange} label="Editar disponibilidad" primary />
+        <QuickAction
+          href="/admin/disponibilidad"
+          icon={CalendarRange}
+          label="Editar disponibilidad"
+          primary
+        />
         <QuickAction href="/admin/solicitudes?estado=new" icon={Inbox} label="Nuevas solicitudes" />
       </div>
 
@@ -62,7 +89,11 @@ export default async function AdminDashboard() {
         </div>
         <div className="mt-3 flex flex-col gap-2.5">
           {newAppointments.length === 0 ? (
-            <EmptyState icon={Inbox} title="Sin solicitudes nuevas." description="Aquí aparecerán apenas alguien agende desde la web." />
+            <EmptyState
+              icon={Inbox}
+              title="Sin solicitudes nuevas."
+              description="Aquí aparecerán apenas alguien agende desde la web."
+            />
           ) : (
             newAppointments
               .slice(0, 6)

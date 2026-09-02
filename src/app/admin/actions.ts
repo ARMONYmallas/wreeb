@@ -60,10 +60,7 @@ export async function updateStatus(
     .eq('id', appointmentId)
     .maybeSingle();
 
-  const { error } = await supabase
-    .from('appointments')
-    .update({ status })
-    .eq('id', appointmentId);
+  const { error } = await supabase.from('appointments').update({ status }).eq('id', appointmentId);
   if (error) return fail('cambiar estado', error.message);
 
   await supabase.from('appointment_events').insert({
@@ -255,7 +252,10 @@ export async function deleteTimeSlot(slotId: string): Promise<ActionResult> {
     .in('status', ['new', 'contacted', 'confirmed', 'reschedule']);
 
   if ((count ?? 0) > 0) {
-    const { error } = await supabase.from('time_slots').update({ is_active: false }).eq('id', slotId);
+    const { error } = await supabase
+      .from('time_slots')
+      .update({ is_active: false })
+      .eq('id', slotId);
     if (error) return fail('desactivar bloque', error.message);
     refreshAdmin();
     return {
@@ -270,7 +270,10 @@ export async function deleteTimeSlot(slotId: string): Promise<ActionResult> {
   return { ok: true, message: 'Horario eliminado.' };
 }
 
-export async function moveTimeSlot(slotId: string, direction: 'up' | 'down'): Promise<ActionResult> {
+export async function moveTimeSlot(
+  slotId: string,
+  direction: 'up' | 'down',
+): Promise<ActionResult> {
   await requireAdmin();
   const supabase = await createServerSupabase();
   const { data: slots } = await supabase
@@ -288,7 +291,10 @@ export async function moveTimeSlot(slotId: string, direction: 'up' | 'down'): Pr
   [reordered[index], reordered[target]] = [reordered[target], reordered[index]];
 
   for (const [position, slot] of reordered.entries()) {
-    await supabase.from('time_slots').update({ sort_order: position + 1 }).eq('id', slot.id);
+    await supabase
+      .from('time_slots')
+      .update({ sort_order: position + 1 })
+      .eq('id', slot.id);
   }
 
   refreshAdmin();
@@ -328,7 +334,12 @@ export async function setWeeklyCapacity(
   const { error } = await supabase
     .from('weekly_availability')
     .upsert(
-      { day_of_week: dayOfWeek, time_slot_id: slotId, capacity_override: capacity, is_active: true },
+      {
+        day_of_week: dayOfWeek,
+        time_slot_id: slotId,
+        capacity_override: capacity,
+        is_active: true,
+      },
       { onConflict: 'day_of_week,time_slot_id' },
     );
   if (error) return fail('guardar cupos', error.message);

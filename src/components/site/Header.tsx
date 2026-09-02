@@ -39,7 +39,9 @@ export function Header() {
   }, [menuOpen]);
 
   const isActive = (href: string) =>
-    href === '/' ? pathname === '/' : pathname.startsWith(href.split('#')[0]) && href !== '/#como-funciona';
+    href === '/'
+      ? pathname === '/'
+      : pathname.startsWith(href.split('#')[0]) && href !== '/#como-funciona';
 
   return (
     <header

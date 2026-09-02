@@ -38,7 +38,10 @@ export function ServicesSection() {
                   className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 transition-colors hover:text-brand-800"
                 >
                   Agendar visita
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
                 </TrackedLink>
               </div>
             </article>
@@ -56,7 +59,9 @@ export function ServicesSection() {
                 <service.icon className="h-5 w-5" aria-hidden="true" strokeWidth={1.7} />
               </span>
               <h3 className="mt-4 text-base font-semibold text-ink">{service.title}</h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{service.description}</p>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
+                {service.description}
+              </p>
               <TrackedLink
                 href={bookingHref(service.prefill)}
                 event="click_agendar"

@@ -10,7 +10,8 @@ const base =
   'disabled:cursor-not-allowed disabled:opacity-55 select-none';
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800 shadow-[var(--shadow-soft)]',
+  primary:
+    'bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800 shadow-[var(--shadow-soft)]',
   secondary: 'bg-brand-50 text-brand-800 hover:bg-brand-100 active:bg-brand-200',
   outline: 'border border-line-strong bg-white text-ink hover:bg-surface active:bg-surface-2',
   ghost: 'text-ink hover:bg-surface active:bg-surface-2',
@@ -59,7 +60,12 @@ export function ButtonLink({
   ...rest
 }: AnchorProps) {
   const cls = classes({ variant, size, fullWidth, className, children });
-  if (external || href.startsWith('http') || href.startsWith('tel:') || href.startsWith('mailto:')) {
+  if (
+    external ||
+    href.startsWith('http') ||
+    href.startsWith('tel:') ||
+    href.startsWith('mailto:')
+  ) {
     return (
       <a
         href={href}

@@ -2,13 +2,7 @@
 
 export const MAX_PHOTOS = 3;
 export const MAX_FILE_BYTES = 8 * 1024 * 1024; // 8 MB por archivo, antes de comprimir
-export const ACCEPTED_MIME = [
-  'image/jpeg',
-  'image/png',
-  'image/webp',
-  'image/heic',
-  'image/heif',
-];
+export const ACCEPTED_MIME = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
 export const ACCEPT_ATTR = '.jpg,.jpeg,.png,.webp,.heic,.heif,image/*';
 
 const MAX_DIMENSION = 1600;
@@ -74,7 +68,8 @@ export async function compressImage(file: File): Promise<File> {
 
 export function validatePhoto(file: File): string | null {
   const type = file.type.toLowerCase();
-  const looksLikeImage = type.startsWith('image/') || /\.(jpe?g|png|webp|heic|heif)$/i.test(file.name);
+  const looksLikeImage =
+    type.startsWith('image/') || /\.(jpe?g|png|webp|heic|heif)$/i.test(file.name);
   if (!looksLikeImage) return 'Ese archivo no es una imagen.';
   if (file.size > MAX_FILE_BYTES) return 'La imagen supera los 8 MB.';
   return null;

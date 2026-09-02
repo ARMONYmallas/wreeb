@@ -28,7 +28,9 @@ export function WeeklyScheduleEditor({
   const isActive = (day: number, slotId: string) => {
     const key = `${day}:${slotId}`;
     if (key in optimistic) return optimistic[key];
-    return weekly.find((w) => w.day_of_week === day && w.time_slot_id === slotId)?.is_active ?? false;
+    return (
+      weekly.find((w) => w.day_of_week === day && w.time_slot_id === slotId)?.is_active ?? false
+    );
   };
 
   const toggle = (day: number, slotId: string, next: boolean) => {

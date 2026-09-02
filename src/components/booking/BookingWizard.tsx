@@ -1,14 +1,22 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
 import { STEP_FIELDS, bookingFormSchema, type BookingFormValues } from '@/lib/validation';
-import { SERVICE_TYPES, SPACE_TYPES, type PublicDay, type ServiceType, type SpaceType } from '@/types';
+import {
+  SERVICE_TYPES,
+  SPACE_TYPES,
+  type PublicDay,
+  type ServiceType,
+  type SpaceType,
+} from '@/types';
 import { track } from '@/lib/analytics';
 import type { PreparedPhoto } from '@/lib/images';
+import { Logo } from '@/components/site/Logo';
 import { ProgressBar } from './ProgressBar';
 import { StepOne } from './StepOne';
 import { StepTwo } from './StepTwo';
@@ -174,9 +182,7 @@ export function BookingWizard() {
       if (!res.ok) {
         if (data?.code === 'SLOT_UNAVAILABLE') {
           // Otra persona tomó el último cupo mientras completaba el formulario.
-          setSubmitError(
-            'Ese horario se acaba de ocupar. Elige otro y volvemos a intentarlo.',
-          );
+          setSubmitError('Ese horario se acaba de ocupar. Elige otro y volvemos a intentarlo.');
           form.setValue('timeSlotId', '');
           await loadAvailability();
         } else {
@@ -216,74 +222,107 @@ export function BookingWizard() {
     [],
   );
 
-  if (result) return <SuccessScreen result={result} />;
-
   return (
-    <div ref={topRef} className="scroll-mt-24">
-      <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
-          <ProgressBar step={step} />
-
-          <h1 className="mt-6 text-2xl leading-tight font-bold text-ink sm:text-3xl">
-            {stepTitles[step]}
-          </h1>
-
-          <div className="mt-6">
-            {step === 1 && <StepOne />}
-            {step === 2 && <StepTwo photos={photos} onPhotosChange={setPhotos} />}
-            {step === 3 && (
-              <StepThree
-                days={days}
-                loadingDays={loadingDays}
-                onRefreshAvailability={loadAvailability}
-              />
-            )}
-          </div>
-
-          {submitError && (
-            <p
-              role="alert"
-              className="mt-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3.5 text-sm font-medium text-red-800"
+    <>
+      {/* Encabezado propio y sin distracciones: aquí la única tarea es agendar.
+          Una vez enviada la solicitud, "Cancelar" dejaría de tener sentido. */}
+      <header className="sticky top-0 z-40 -mx-5 border-b border-line bg-white/95 px-5 backdrop-blur">
+        <div className="flex h-16 items-center justify-between">
+          <Logo compact />
+          {result ? (
+            <Link
+              href="/"
+              className="text-sm font-medium text-muted transition-colors hover:text-ink"
             >
-              {submitError}
-            </p>
+              Inicio
+            </Link>
+          ) : (
+            <Link
+              href="/"
+              className="text-sm font-medium text-muted transition-colors hover:text-ink"
+            >
+              Cancelar
+            </Link>
           )}
+        </div>
+      </header>
 
-          {/* Acciones: en móvil quedan fijas y siempre alcanzables con el pulgar. */}
-          <div className="safe-bottom sticky bottom-0 z-30 mt-8 -mx-5 border-t border-line bg-white/95 px-5 py-3.5 backdrop-blur sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:px-0 sm:py-0 sm:backdrop-blur-none">
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={goBack}
-                className="inline-flex h-14 shrink-0 items-center justify-center gap-1.5 rounded-full border border-line-strong bg-white px-5 text-[0.9375rem] font-semibold text-ink-soft transition-colors hover:bg-surface"
-              >
-                <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-                <span className="sr-only sm:not-sr-only">{step === 1 ? 'Salir' : 'Volver'}</span>
-              </button>
+      <div className="pt-8 sm:pt-10">
+        {result ? (
+          <SuccessScreen result={result} />
+        ) : (
+          <div ref={topRef} className="scroll-mt-24">
+            <FormProvider {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+                <ProgressBar step={step} />
 
-              {step < 3 ? (
-                <button
-                  type="button"
-                  onClick={goNext}
-                  className="inline-flex h-14 flex-1 items-center justify-center gap-2 rounded-full bg-brand-600 px-7 text-base font-semibold text-white transition-colors hover:bg-brand-700"
-                >
-                  Continuar
-                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="inline-flex h-14 flex-1 items-center justify-center gap-2 rounded-full bg-brand-600 px-7 text-base font-semibold text-white transition-colors hover:bg-brand-700 disabled:opacity-60"
-                >
-                  {submitting && <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" />}
-                  {submitting ? 'Enviando…' : 'Solicitar visita'}
-                </button>
-              )}
-            </div>
+                <h1 className="mt-6 text-2xl leading-tight font-bold text-ink sm:text-3xl">
+                  {stepTitles[step]}
+                </h1>
+
+                <div className="mt-6">
+                  {step === 1 && <StepOne />}
+                  {step === 2 && <StepTwo photos={photos} onPhotosChange={setPhotos} />}
+                  {step === 3 && (
+                    <StepThree
+                      days={days}
+                      loadingDays={loadingDays}
+                      onRefreshAvailability={loadAvailability}
+                    />
+                  )}
+                </div>
+
+                {submitError && (
+                  <p
+                    role="alert"
+                    className="mt-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3.5 text-sm font-medium text-red-800"
+                  >
+                    {submitError}
+                  </p>
+                )}
+
+                {/* Acciones: en móvil quedan fijas y siempre alcanzables con el pulgar. */}
+                <div className="safe-bottom sticky bottom-0 z-30 mt-8 -mx-5 border-t border-line bg-white/95 px-5 py-3.5 backdrop-blur sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:px-0 sm:py-0 sm:backdrop-blur-none">
+                  <div className="flex items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={goBack}
+                      className="inline-flex h-14 shrink-0 items-center justify-center gap-1.5 rounded-full border border-line-strong bg-white px-5 text-[0.9375rem] font-semibold text-ink-soft transition-colors hover:bg-surface"
+                    >
+                      <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+                      <span className="sr-only sm:not-sr-only">
+                        {step === 1 ? 'Salir' : 'Volver'}
+                      </span>
+                    </button>
+
+                    {step < 3 ? (
+                      <button
+                        type="button"
+                        onClick={goNext}
+                        className="inline-flex h-14 flex-1 items-center justify-center gap-2 rounded-full bg-brand-600 px-7 text-base font-semibold text-white transition-colors hover:bg-brand-700"
+                      >
+                        Continuar
+                        <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                      </button>
+                    ) : (
+                      <button
+                        type="submit"
+                        disabled={submitting}
+                        className="inline-flex h-14 flex-1 items-center justify-center gap-2 rounded-full bg-brand-600 px-7 text-base font-semibold text-white transition-colors hover:bg-brand-700 disabled:opacity-60"
+                      >
+                        {submitting && (
+                          <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" />
+                        )}
+                        {submitting ? 'Enviando…' : 'Solicitar visita'}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </form>
+            </FormProvider>
           </div>
-        </form>
-      </FormProvider>
-    </div>
+        )}
+      </div>
+    </>
   );
 }

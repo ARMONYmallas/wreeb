@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import Link from 'next/link';
 import { ShieldCheck } from 'lucide-react';
 import { business } from '@/config/business';
 import { buildMetadata } from '@/lib/seo';
-import { Logo } from '@/components/site/Logo';
 import { BookingWizard } from '@/components/booking/BookingWizard';
 
 export const metadata: Metadata = buildMetadata({
@@ -22,17 +20,7 @@ export const metadata: Metadata = buildMetadata({
 export default function BookingPage() {
   return (
     <div className="min-h-dvh bg-white">
-      {/* Encabezado propio y sin distracciones: aquí la única tarea es agendar. */}
-      <header className="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur">
-        <div className="mx-auto flex h-16 w-full max-w-2xl items-center justify-between px-5">
-          <Logo compact />
-          <Link href="/" className="text-sm font-medium text-muted transition-colors hover:text-ink">
-            Cancelar
-          </Link>
-        </div>
-      </header>
-
-      <div className="mx-auto w-full max-w-2xl px-5 py-8 pb-12 sm:py-10">
+      <div className="mx-auto w-full max-w-2xl px-5 pb-12">
         <Suspense fallback={<WizardSkeleton />}>
           <BookingWizard />
         </Suspense>
@@ -49,7 +37,7 @@ export default function BookingPage() {
 
 function WizardSkeleton() {
   return (
-    <div className="animate-pulse">
+    <div className="animate-pulse pt-24">
       <div className="h-4 w-28 rounded bg-surface-2" />
       <div className="mt-3 h-1.5 rounded-full bg-surface-2" />
       <div className="mt-7 h-9 w-3/4 rounded bg-surface-2" />

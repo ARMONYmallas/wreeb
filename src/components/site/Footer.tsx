@@ -29,7 +29,10 @@ export function Footer() {
             <ul className="mt-3 flex flex-col gap-2.5">
               {MAIN_NAV.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-sm text-muted transition-colors hover:text-brand-700">
+                  <Link
+                    href={item.href}
+                    className="text-sm text-muted transition-colors hover:text-brand-700"
+                  >
                     {item.label}
                   </Link>
                 </li>
@@ -42,7 +45,10 @@ export function Footer() {
             <ul className="mt-3 flex flex-col gap-2.5">
               {FOOTER_SERVICES.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-sm text-muted transition-colors hover:text-brand-700">
+                  <Link
+                    href={item.href}
+                    className="text-sm text-muted transition-colors hover:text-brand-700"
+                  >
                     {item.label}
                   </Link>
                 </li>
@@ -95,8 +101,8 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-brand-700"
                 >
-                  <Instagram className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  @{business.contact.instagram}
+                  <Instagram className="h-4 w-4 shrink-0" aria-hidden="true" />@
+                  {business.contact.instagram}
                 </a>
               </li>
             </ul>
@@ -117,7 +123,10 @@ export function Footer() {
           <ul className="flex flex-wrap gap-x-5 gap-y-2">
             {FOOTER_LEGAL.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="text-xs text-muted transition-colors hover:text-brand-700">
+                <Link
+                  href={item.href}
+                  className="text-xs text-muted transition-colors hover:text-brand-700"
+                >
                   {item.label}
                 </Link>
               </li>

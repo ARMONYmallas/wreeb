@@ -66,7 +66,11 @@ export function SelfCheck() {
                 </legend>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {SIGNAL_OPTIONS.map((o) => (
-                    <OptionChip key={o.id} selected={signal === o.id} onClick={() => setSignal(o.id)}>
+                    <OptionChip
+                      key={o.id}
+                      selected={signal === o.id}
+                      onClick={() => setSignal(o.id)}
+                    >
                       {o.label}
                     </OptionChip>
                   ))}

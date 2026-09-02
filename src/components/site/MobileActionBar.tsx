@@ -30,8 +30,7 @@ export function MobileActionBar() {
     return () => vv.removeEventListener('resize', onResize);
   }, []);
 
-  const hidden =
-    keyboardOpen || pathname.startsWith('/agendar') || pathname.startsWith('/admin');
+  const hidden = keyboardOpen || pathname.startsWith('/agendar') || pathname.startsWith('/admin');
 
   if (hidden) return null;
 

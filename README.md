@@ -36,13 +36,13 @@ Ver [`supabase/README.md`](supabase/README.md) para el paso a paso. En resumen:
 
 Todas están documentadas en `.env.example`. Las imprescindibles:
 
-| Variable | Para qué sirve |
-|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` · `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Conexión pública a Supabase |
-| `SUPABASE_SERVICE_ROLE_KEY` | **Sólo servidor.** Crear solicitudes y firmar fotos |
-| `NEXT_PUBLIC_WHATSAPP_NUMBER` | Número de WhatsApp, formato `56912345678` |
-| `RESEND_API_KEY` · `RESEND_FROM_EMAIL` · `ADMIN_NOTIFICATION_EMAIL` | Avisos por correo |
-| `NEXT_PUBLIC_SITE_URL` | URL pública, para canonical y sitemap |
+| Variable                                                            | Para qué sirve                                      |
+| ------------------------------------------------------------------- | --------------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL` · `NEXT_PUBLIC_SUPABASE_ANON_KEY`        | Conexión pública a Supabase                         |
+| `SUPABASE_SERVICE_ROLE_KEY`                                         | **Sólo servidor.** Crear solicitudes y firmar fotos |
+| `NEXT_PUBLIC_WHATSAPP_NUMBER`                                       | Número de WhatsApp, formato `56912345678`           |
+| `RESEND_API_KEY` · `RESEND_FROM_EMAIL` · `ADMIN_NOTIFICATION_EMAIL` | Avisos por correo                                   |
+| `NEXT_PUBLIC_SITE_URL`                                              | URL pública, para canonical y sitemap               |
 
 El sitio funciona aunque falten variables: los botones que no llevan a ninguna
 parte simplemente no se muestran, y el calendario explica que no hay horarios
@@ -59,17 +59,17 @@ falta configuración adicional.
 
 **Nada de la información comercial está escrita dentro de los componentes.**
 
-| Qué quieres cambiar | Dónde |
-|---|---|
-| Teléfono, correo, Instagram, cobertura, garantía, ficha técnica | `src/config/business.ts` |
-| Fotos de trabajos realizados | `src/config/gallery.ts` + `public/trabajos/` |
-| Testimonios | `src/config/testimonials.ts` |
-| Preguntas frecuentes | `src/config/faq.ts` |
-| Servicios | `src/config/services.ts` |
-| Recomendaciones de cuidado | `src/config/care.ts` |
-| Menú de navegación | `src/config/navigation.ts` |
-| Colores de marca | `src/app/globals.css` (bloque `@theme`) |
-| **Días y horarios de visita** | **`/admin/disponibilidad`, desde el navegador** |
+| Qué quieres cambiar                                             | Dónde                                           |
+| --------------------------------------------------------------- | ----------------------------------------------- |
+| Teléfono, correo, Instagram, cobertura, garantía, ficha técnica | `src/config/business.ts`                        |
+| Fotos de trabajos realizados                                    | `src/config/gallery.ts` + `public/trabajos/`    |
+| Testimonios                                                     | `src/config/testimonials.ts`                    |
+| Preguntas frecuentes                                            | `src/config/faq.ts`                             |
+| Servicios                                                       | `src/config/services.ts`                        |
+| Recomendaciones de cuidado                                      | `src/config/care.ts`                            |
+| Menú de navegación                                              | `src/config/navigation.ts`                      |
+| Colores de marca                                                | `src/app/globals.css` (bloque `@theme`)         |
+| **Días y horarios de visita**                                   | **`/admin/disponibilidad`, desde el navegador** |
 
 ### Cómo se comporta lo que aún no está confirmado
 
@@ -99,7 +99,7 @@ Horario habitual  +  Excepciones por fecha  +  Cupos  −  Solicitudes activas
 
 - **Horario habitual** (`/admin/disponibilidad` → Semana): la semana normal.
 - **Excepciones por fecha** (→ Calendario): se toca un día y se elige entre
-  *usar el horario habitual*, *personalizarlo* o *bloquearlo*. Sólo afecta a esa
+  _usar el horario habitual_, _personalizarlo_ o _bloquearlo_. Sólo afecta a esa
   fecha.
 - **Bloques horarios** (→ Bloques): se crean, editan, ordenan y eliminan desde
   la interfaz, con sus cupos. Nada está fijado en el código.
@@ -107,7 +107,7 @@ Horario habitual  +  Excepciones por fecha  +  Cupos  −  Solicitudes activas
 Todo se calcula en la base de datos. La web pública lo consulta sin caché, así
 que **un cambio se ve en segundos, sin redeploy**.
 
-Bloquear mañana toma **dos toques**: tocar el día → *Bloquear día completo*.
+Bloquear mañana toma **dos toques**: tocar el día → _Bloquear día completo_.
 
 ### Una solicitud no es una visita confirmada
 

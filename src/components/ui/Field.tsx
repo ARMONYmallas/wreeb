@@ -1,7 +1,12 @@
 'use client';
 
 import { forwardRef, useId } from 'react';
-import type { ReactNode, InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes } from 'react';
+import type {
+  ReactNode,
+  InputHTMLAttributes,
+  SelectHTMLAttributes,
+  TextareaHTMLAttributes,
+} from 'react';
 import { cn } from '@/lib/cn';
 
 const controlBase =
@@ -62,7 +67,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         ref={ref}
         id={inputId}
         aria-invalid={error ? true : undefined}
-        className={cn(controlBase, 'h-13 py-3.5', error && 'border-red-300 focus:ring-red-100', className)}
+        className={cn(
+          controlBase,
+          'h-13 py-3.5',
+          error && 'border-red-300 focus:ring-red-100',
+          className,
+        )}
         style={{ height: '3.25rem' }}
         {...rest}
       />
@@ -135,7 +145,12 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
         ref={ref}
         id={areaId}
         aria-invalid={error ? true : undefined}
-        className={cn(controlBase, 'min-h-28 py-3.5 leading-relaxed', error && 'border-red-300', className)}
+        className={cn(
+          controlBase,
+          'min-h-28 py-3.5 leading-relaxed',
+          error && 'border-red-300',
+          className,
+        )}
         {...rest}
       />
     </FieldWrapper>

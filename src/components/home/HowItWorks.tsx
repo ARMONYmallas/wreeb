@@ -6,22 +6,26 @@ const STEPS = [
   {
     icon: MessageSquareText,
     title: 'Cuéntanos qué necesitas',
-    description: 'Eliges el espacio que quieres proteger y el tipo de trabajo. Toma menos de un minuto.',
+    description:
+      'Eliges el espacio que quieres proteger y el tipo de trabajo. Toma menos de un minuto.',
   },
   {
     icon: Camera,
     title: 'Muéstranos el espacio',
-    description: 'Puedes adjuntar hasta 3 fotos desde tu celular. Es opcional: también puedes continuar sin ellas.',
+    description:
+      'Puedes adjuntar hasta 3 fotos desde tu celular. Es opcional: también puedes continuar sin ellas.',
   },
   {
     icon: CalendarCheck,
     title: 'Solicita tu visita',
-    description: 'Eliges el día y el horario que te acomoda, dentro de la disponibilidad real de ARMONY.',
+    description:
+      'Eliges el día y el horario que te acomoda, dentro de la disponibilidad real de ARMONY.',
   },
   {
     icon: PhoneCall,
     title: 'Te contactamos',
-    description: 'Revisamos tu solicitud, te escribimos para coordinar los detalles y confirmamos la visita.',
+    description:
+      'Revisamos tu solicitud, te escribimos para coordinar los detalles y confirmamos la visita.',
   },
 ];
 
@@ -42,7 +46,10 @@ export function HowItWorks() {
                 <span className="grid h-11 w-11 place-items-center rounded-xl bg-white text-brand-600 ring-1 ring-line">
                   <Icon className="h-5 w-5" aria-hidden="true" strokeWidth={1.7} />
                 </span>
-                <span className="font-display text-3xl font-bold text-line-strong" aria-hidden="true">
+                <span
+                  className="font-display text-3xl font-bold text-line-strong"
+                  aria-hidden="true"
+                >
                   {index + 1}
                 </span>
               </div>

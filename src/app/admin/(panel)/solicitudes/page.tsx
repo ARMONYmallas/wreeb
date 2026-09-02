@@ -28,9 +28,7 @@ export default async function AppointmentsPage({
       <PageHeader
         title="Solicitudes"
         description={
-          appointments.length === 1
-            ? '1 solicitud'
-            : `${appointments.length} solicitudes`
+          appointments.length === 1 ? '1 solicitud' : `${appointments.length} solicitudes`
         }
       />
 

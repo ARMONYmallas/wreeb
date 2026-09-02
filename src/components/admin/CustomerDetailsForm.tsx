@@ -20,9 +20,7 @@ export function CustomerDetailsForm({ appointment }: { appointment: AppointmentW
         <MapPinHouse className="h-[1.125rem] w-[1.125rem] text-brand-600" aria-hidden="true" />
         Datos de la visita
       </h2>
-      <p className="mt-1 text-sm text-muted">
-        Completa esto cuando lo coordines por WhatsApp.
-      </p>
+      <p className="mt-1 text-sm text-muted">Completa esto cuando lo coordines por WhatsApp.</p>
 
       <form
         action={(formData) => {

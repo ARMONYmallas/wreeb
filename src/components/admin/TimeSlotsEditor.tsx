@@ -62,7 +62,10 @@ export function TimeSlotsEditor({ slots }: { slots: TimeSlot[] }) {
                 )}
               </p>
               <p className="mt-0.5 text-sm text-muted">
-                {[slot.label, `${slot.default_capacity} ${slot.default_capacity === 1 ? 'cupo' : 'cupos'}`]
+                {[
+                  slot.label,
+                  `${slot.default_capacity} ${slot.default_capacity === 1 ? 'cupo' : 'cupos'}`,
+                ]
                   .filter(Boolean)
                   .join(' · ')}
               </p>

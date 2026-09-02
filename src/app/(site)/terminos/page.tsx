@@ -38,9 +38,10 @@ export default function TermsPage() {
 
             <h2>La solicitud de visita no es una reserva confirmada</h2>
             <p>
-              Al enviar el formulario estás indicando una <strong>fecha y un horario
-              preferidos</strong>. La visita no queda confirmada automáticamente: revisamos la
-              disponibilidad real y te contactamos para confirmarla o proponerte otra alternativa.
+              Al enviar el formulario estás indicando una{' '}
+              <strong>fecha y un horario preferidos</strong>. La visita no queda confirmada
+              automáticamente: revisamos la disponibilidad real y te contactamos para confirmarla o
+              proponerte otra alternativa.
             </p>
 
             <h2>Información entregada por ti</h2>
@@ -96,7 +97,8 @@ export default function TermsPage() {
             </p>
 
             <p className="mt-8 text-sm">
-              Última actualización: {new Date().toLocaleDateString('es-CL', {
+              Última actualización:{' '}
+              {new Date().toLocaleDateString('es-CL', {
                 year: 'numeric',
                 month: 'long',
               })}

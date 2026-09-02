@@ -67,11 +67,16 @@ export function AvailabilityCalendar({
     router.push(`/admin/disponibilidad?mes=${next}`);
   };
 
-  const quick = (label: string, action: () => Promise<{ ok: boolean; error?: string; message?: string }>) => {
+  const quick = (
+    label: string,
+    action: () => Promise<{ ok: boolean; error?: string; message?: string }>,
+  ) => {
     setMessage(null);
     startTransition(async () => {
       const result = await action();
-      setMessage(result.ok ? (result.message ?? `${label} listo.`) : (result.error ?? 'No se pudo guardar.'));
+      setMessage(
+        result.ok ? (result.message ?? `${label} listo.`) : (result.error ?? 'No se pudo guardar.'),
+      );
     });
   };
 
@@ -162,7 +167,10 @@ export function AvailabilityCalendar({
 
         <div className="mt-4 grid grid-cols-7 gap-1" aria-hidden="true">
           {['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'].map((d) => (
-            <span key={d} className="py-1 text-center text-[0.6875rem] font-semibold text-muted-soft">
+            <span
+              key={d}
+              className="py-1 text-center text-[0.6875rem] font-semibold text-muted-soft"
+            >
               {d}
             </span>
           ))}

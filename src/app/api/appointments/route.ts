@@ -29,7 +29,10 @@ export async function POST(request: Request) {
   const withinBurst = await checkRateLimit(`solicitudes:intentos:${ip}`, 30, 60 * 60);
   if (!withinBurst) {
     return NextResponse.json(
-      { error: 'Recibimos demasiadas peticiones desde este dispositivo. Escríbenos por WhatsApp y te ayudamos.' },
+      {
+        error:
+          'Recibimos demasiadas peticiones desde este dispositivo. Escríbenos por WhatsApp y te ayudamos.',
+      },
       { status: 429 },
     );
   }
@@ -72,7 +75,10 @@ export async function POST(request: Request) {
   if (!parsed.success) {
     const first = parsed.error.issues[0];
     return NextResponse.json(
-      { error: first?.message ?? 'Revisa los datos e inténtalo nuevamente.', field: first?.path?.[0] },
+      {
+        error: first?.message ?? 'Revisa los datos e inténtalo nuevamente.',
+        field: first?.path?.[0],
+      },
       { status: 400 },
     );
   }
@@ -83,7 +89,10 @@ export async function POST(request: Request) {
   const withinCreateLimit = await checkRateLimit(`solicitudes:creadas:${ip}`, 5, 60 * 60);
   if (!withinCreateLimit) {
     return NextResponse.json(
-      { error: 'Ya enviaste varias solicitudes. Escríbenos por WhatsApp y te ayudamos directamente.' },
+      {
+        error:
+          'Ya enviaste varias solicitudes. Escríbenos por WhatsApp y te ayudamos directamente.',
+      },
       { status: 429 },
     );
   }

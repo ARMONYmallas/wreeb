@@ -58,7 +58,9 @@ export function CoverageSection() {
                   disabled={!region}
                   onChange={(e) => setCommune(e.target.value)}
                 >
-                  <option value="">{region ? 'Selecciona tu comuna' : 'Elige primero la región'}</option>
+                  <option value="">
+                    {region ? 'Selecciona tu comuna' : 'Elige primero la región'}
+                  </option>
                   {region?.communes.map((c) => (
                     <option key={c} value={c}>
                       {c}

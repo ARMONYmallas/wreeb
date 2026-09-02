@@ -40,7 +40,10 @@ const phoneSchema = z
   .transform((v, ctx) => {
     const normalized = normalizePhone(v);
     if (!normalized) {
-      ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Revisa el número, por ejemplo +56 9 1234 5678' });
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Revisa el número, por ejemplo +56 9 1234 5678',
+      });
       return z.NEVER;
     }
     return normalized;
@@ -87,7 +90,12 @@ export const appointmentSchema = z
     name: nameSchema,
     phone: phoneSchema,
     email: emailSchema,
-    customerNotes: z.string().trim().max(500).optional().or(z.literal('').transform(() => undefined)),
+    customerNotes: z
+      .string()
+      .trim()
+      .max(500)
+      .optional()
+      .or(z.literal('').transform(() => undefined)),
     consent: z.literal(true, {
       errorMap: () => ({ message: 'Necesitamos tu autorización para gestionar la solicitud' }),
     }),
@@ -99,7 +107,11 @@ export const appointmentSchema = z
   .superRefine((data, ctx) => {
     const region = REGION_BY_CODE.get(data.regionCode);
     if (!region) {
-      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['regionCode'], message: 'Región no válida' });
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['regionCode'],
+        message: 'Región no válida',
+      });
       return;
     }
     if (!region.communes.includes(data.commune)) {
@@ -114,7 +126,12 @@ export type AppointmentInput = z.infer<typeof appointmentSchema>;
 export const timeSlotSchema = z
   .object({
     id: z.string().uuid().optional(),
-    label: z.string().trim().max(40).optional().or(z.literal('').transform(() => undefined)),
+    label: z
+      .string()
+      .trim()
+      .max(40)
+      .optional()
+      .or(z.literal('').transform(() => undefined)),
     startTime: z.string().regex(/^\d{2}:\d{2}$/, 'Hora inválida'),
     endTime: z.string().regex(/^\d{2}:\d{2}$/, 'Hora inválida'),
     capacity: z.coerce.number().int().min(0).max(50),
@@ -129,7 +146,12 @@ export const blockRangeSchema = z
   .object({
     from: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Elige la fecha de inicio'),
     to: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Elige la fecha de término'),
-    reason: z.string().trim().max(80).optional().or(z.literal('').transform(() => undefined)),
+    reason: z
+      .string()
+      .trim()
+      .max(80)
+      .optional()
+      .or(z.literal('').transform(() => undefined)),
   })
   .refine((d) => d.to >= d.from, {
     message: 'La fecha de término no puede ser anterior a la de inicio',
@@ -141,9 +163,7 @@ export const customerDetailsSchema = z.object({
   apartment: z.string().trim().max(40).optional().or(z.literal('')),
   floor: z.string().trim().max(20).optional().or(z.literal('')),
   reference: z.string().trim().max(200).optional().or(z.literal('')),
-  windowCount: z
-    .union([z.coerce.number().int().min(0).max(200), z.literal('')])
-    .optional(),
+  windowCount: z.union([z.coerce.number().int().min(0).max(200), z.literal('')]).optional(),
   details: z.string().trim().max(1000).optional().or(z.literal('')),
 });
 

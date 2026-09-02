@@ -85,8 +85,18 @@ export default async function AgendaPage({
       />
 
       <div className="flex flex-col gap-2.5">
-        <FilterRow items={SCOPES} active={scope} paramName="rango" other={`estado=${statusFilter}`} />
-        <FilterRow items={STATUS_FILTERS} active={statusFilter} paramName="estado" other={`rango=${scope}`} />
+        <FilterRow
+          items={SCOPES}
+          active={scope}
+          paramName="rango"
+          other={`estado=${statusFilter}`}
+        />
+        <FilterRow
+          items={STATUS_FILTERS}
+          active={statusFilter}
+          paramName="estado"
+          other={`rango=${scope}`}
+        />
       </div>
 
       {orderedDays.length === 0 ? (
@@ -128,47 +138,48 @@ export default async function AgendaPage({
                 {/* Resumen por bloque: lo primero que se quiere ver en el celular. */}
                 {!detailed && !blocked ? (
                   <p className="mt-3 rounded-xl border border-line bg-white px-4 py-2.5 text-sm text-muted">
-                    {openSlots.length} {openSlots.length === 1 ? 'bloque disponible' : 'bloques disponibles'}
+                    {openSlots.length}{' '}
+                    {openSlots.length === 1 ? 'bloque disponible' : 'bloques disponibles'}
                     {' · '}
                     {openSlots.map((s) => formatTime(s.start_time)).join(', ')}
                   </p>
                 ) : (
-                <ul className="mt-3 flex flex-col gap-1.5">
-                  {blocked ? (
-                    <li className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-800">
-                      <Lock className="h-4 w-4" aria-hidden="true" />
-                      Día bloqueado
-                    </li>
-                  ) : (
-                    daySlots.map((slot) => {
-                      const count = dayAppointments.filter(
-                        (a) => a.time_slot_id === slot.slot_id,
-                      ).length;
-                      return (
-                        <li
-                          key={slot.slot_id}
-                          className={cn(
-                            'flex items-center justify-between gap-3 rounded-xl border px-4 py-2.5 text-sm',
-                            slot.is_available
-                              ? 'border-line bg-white'
-                              : 'border-dashed border-line-strong bg-surface text-muted',
-                          )}
-                        >
-                          <span className="font-semibold">
-                            {formatTime(slot.start_time)}–{formatTime(slot.end_time)}
-                          </span>
-                          <span className={slot.is_available ? 'text-muted' : ''}>
-                            {!slot.is_available
-                              ? 'Bloqueado'
-                              : count === 0
-                                ? `Sin solicitudes · ${slot.capacity} ${slot.capacity === 1 ? 'cupo' : 'cupos'}`
-                                : `${count} de ${slot.capacity} ${slot.capacity === 1 ? 'cupo' : 'cupos'} usado${count === 1 ? '' : 's'}`}
-                          </span>
-                        </li>
-                      );
-                    })
-                  )}
-                </ul>
+                  <ul className="mt-3 flex flex-col gap-1.5">
+                    {blocked ? (
+                      <li className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-800">
+                        <Lock className="h-4 w-4" aria-hidden="true" />
+                        Día bloqueado
+                      </li>
+                    ) : (
+                      daySlots.map((slot) => {
+                        const count = dayAppointments.filter(
+                          (a) => a.time_slot_id === slot.slot_id,
+                        ).length;
+                        return (
+                          <li
+                            key={slot.slot_id}
+                            className={cn(
+                              'flex items-center justify-between gap-3 rounded-xl border px-4 py-2.5 text-sm',
+                              slot.is_available
+                                ? 'border-line bg-white'
+                                : 'border-dashed border-line-strong bg-surface text-muted',
+                            )}
+                          >
+                            <span className="font-semibold">
+                              {formatTime(slot.start_time)}–{formatTime(slot.end_time)}
+                            </span>
+                            <span className={slot.is_available ? 'text-muted' : ''}>
+                              {!slot.is_available
+                                ? 'Bloqueado'
+                                : count === 0
+                                  ? `Sin solicitudes · ${slot.capacity} ${slot.capacity === 1 ? 'cupo' : 'cupos'}`
+                                  : `${count} de ${slot.capacity} ${slot.capacity === 1 ? 'cupo' : 'cupos'} usado${count === 1 ? '' : 's'}`}
+                            </span>
+                          </li>
+                        );
+                      })
+                    )}
+                  </ul>
                 )}
 
                 {dayAppointments.length > 0 && (
@@ -176,7 +187,9 @@ export default async function AgendaPage({
                     {dayAppointments
                       .slice()
                       .sort((a, b) =>
-                        (a.time_slot?.start_time ?? '').localeCompare(b.time_slot?.start_time ?? ''),
+                        (a.time_slot?.start_time ?? '').localeCompare(
+                          b.time_slot?.start_time ?? '',
+                        ),
                       )
                       .map((appointment) => (
                         <AppointmentCard key={appointment.id} appointment={appointment} />
@@ -226,7 +239,8 @@ function FilterRow<T extends string>({
 
 function matchesFilter(status: AppointmentStatus, filter: StatusFilter): boolean {
   if (filter === 'all') return APPOINTMENT_STATUSES.includes(status);
-  if (filter === 'pending') return status === 'new' || status === 'contacted' || status === 'reschedule';
+  if (filter === 'pending')
+    return status === 'new' || status === 'contacted' || status === 'reschedule';
   return status === filter;
 }
 

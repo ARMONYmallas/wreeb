@@ -1,7 +1,16 @@
 'use client';
 
 import { useFormContext } from 'react-hook-form';
-import { AppWindow, Building2, Fence, HelpCircle, Hammer, LayoutGrid, RefreshCw, SearchCheck } from 'lucide-react';
+import {
+  AppWindow,
+  Building2,
+  Fence,
+  HelpCircle,
+  Hammer,
+  LayoutGrid,
+  RefreshCw,
+  SearchCheck,
+} from 'lucide-react';
 import type { BookingFormValues } from '@/lib/validation';
 import type { ServiceType, SpaceType } from '@/types';
 import { OptionCard } from './OptionCard';

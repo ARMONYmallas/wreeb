@@ -1,7 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import {
-  AppWindow, Building2, Fence, Hammer, RefreshCw, SearchCheck,
-} from 'lucide-react';
+import { AppWindow, Building2, Fence, Hammer, RefreshCw, SearchCheck } from 'lucide-react';
 import type { ServiceType, SpaceType } from '@/types';
 
 export type ServiceCard = {

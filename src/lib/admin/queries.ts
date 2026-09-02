@@ -20,7 +20,8 @@ const APPOINTMENT_COLUMNS = `
 `;
 
 function normalizeSlot(row: Record<string, unknown>): AppointmentWithSlot {
-  const slot = row.time_slot as AppointmentWithSlot['time_slot'] | AppointmentWithSlot['time_slot'][] | null;
+  const slot = row.time_slot as
+    AppointmentWithSlot['time_slot'] | AppointmentWithSlot['time_slot'][] | null;
   return {
     ...(row as unknown as AppointmentWithSlot),
     time_slot: Array.isArray(slot) ? (slot[0] ?? null) : slot,
@@ -52,7 +53,11 @@ export async function listAppointments(filters: AppointmentFilters = {}) {
     const term = filters.search.trim().replace(/[%,()]/g, '');
     if (term) {
       const digits = term.replace(/\D/g, '');
-      const clauses = [`name.ilike.%${term}%`, `commune.ilike.%${term}%`, `request_number.ilike.%${term}%`];
+      const clauses = [
+        `name.ilike.%${term}%`,
+        `commune.ilike.%${term}%`,
+        `request_number.ilike.%${term}%`,
+      ];
       if (digits.length >= 4) clauses.push(`phone.ilike.%${digits}%`);
       query = query.or(clauses.join(','));
     }
@@ -149,7 +154,10 @@ export type AdminAvailabilityRow = {
   reason: string | null;
 };
 
-export async function getAdminAvailability(from: string, to: string): Promise<AdminAvailabilityRow[]> {
+export async function getAdminAvailability(
+  from: string,
+  to: string,
+): Promise<AdminAvailabilityRow[]> {
   const supabase = await createServerSupabase();
   const { data, error } = await supabase.rpc('admin_availability', { p_from: from, p_to: to });
   if (error) {

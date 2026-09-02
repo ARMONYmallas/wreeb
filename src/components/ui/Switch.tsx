@@ -36,7 +36,12 @@ export function Switch({
       )}
     >
       <span className="min-w-0">
-        <span className={cn('block text-[0.9375rem] font-semibold', checked ? 'text-brand-900' : 'text-ink')}>
+        <span
+          className={cn(
+            'block text-[0.9375rem] font-semibold',
+            checked ? 'text-brand-900' : 'text-ink',
+          )}
+        >
           {label}
         </span>
         {description && <span className="mt-0.5 block text-xs text-muted">{description}</span>}

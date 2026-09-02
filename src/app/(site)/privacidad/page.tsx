@@ -119,7 +119,8 @@ export default function PrivacyPage() {
             </ul>
 
             <p className="mt-8 text-sm">
-              Última actualización: {new Date().toLocaleDateString('es-CL', {
+              Última actualización:{' '}
+              {new Date().toLocaleDateString('es-CL', {
                 year: 'numeric',
                 month: 'long',
               })}

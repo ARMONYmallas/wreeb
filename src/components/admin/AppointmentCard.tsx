@@ -29,7 +29,8 @@ export function AppointmentCard({
             {appointment.commune}
           </span>
           <span>
-            {SERVICE_LABELS_SHORT[appointment.service_type]} · {SPACE_LABELS[appointment.space_type]}
+            {SERVICE_LABELS_SHORT[appointment.service_type]} ·{' '}
+            {SPACE_LABELS[appointment.space_type]}
           </span>
         </p>
 

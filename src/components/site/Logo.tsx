@@ -24,8 +24,17 @@ export function Logo({
         aria-hidden="true"
         className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand-600 text-white"
       >
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6">
-          <path d="M12 2.5 20 6v6.2c0 4.4-3.2 7.7-8 9.3-4.8-1.6-8-4.9-8-9.3V6l8-3.5Z" strokeLinejoin="round" />
+        <svg
+          viewBox="0 0 24 24"
+          className="h-5 w-5"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+        >
+          <path
+            d="M12 2.5 20 6v6.2c0 4.4-3.2 7.7-8 9.3-4.8-1.6-8-4.9-8-9.3V6l8-3.5Z"
+            strokeLinejoin="round"
+          />
           <path d="M8 8.5v8M12 7v10M16 8.5v8" strokeLinecap="round" opacity=".55" />
           <path d="M5.5 10.5h13M5.5 14h13" strokeLinecap="round" opacity=".55" />
         </svg>

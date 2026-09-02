@@ -84,7 +84,9 @@ export function AdminShell({
       </header>
 
       <div className="lg:pl-60">
-        <main className="mx-auto w-full max-w-5xl px-4 pt-5 pb-28 sm:px-6 lg:pb-10">{children}</main>
+        <main className="mx-auto w-full max-w-5xl px-4 pt-5 pb-28 sm:px-6 lg:pb-10">
+          {children}
+        </main>
       </div>
 
       {/* Móvil: pestañas inferiores, siempre al alcance del pulgar */}

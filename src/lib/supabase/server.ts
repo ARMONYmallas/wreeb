@@ -17,9 +17,7 @@ export async function createServerSupabase() {
       },
       setAll(cookiesToSet: { name: string; value: string; options?: CookieOptions }[]) {
         try {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options),
-          );
+          cookiesToSet.forEach(({ name, value, options }) => cookieStore.set(name, value, options));
         } catch {
           // Los Server Components no pueden escribir cookies; el proxy de
           // sesión se encarga de refrescarlas.

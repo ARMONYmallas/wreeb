@@ -37,8 +37,15 @@ export function FamilySection() {
           <div className="lg:col-span-7">
             <div className="grid gap-4 sm:grid-cols-2">
               {GROUPS.map(({ icon: Icon, title, text, note }) => (
-                <article key={title} className="overflow-hidden rounded-3xl border border-line bg-white">
-                  <PhotoSlot variant="window" className="aspect-[16/9] w-full" sizes="(min-width: 640px) 40vw, 100vw" />
+                <article
+                  key={title}
+                  className="overflow-hidden rounded-3xl border border-line bg-white"
+                >
+                  <PhotoSlot
+                    variant="window"
+                    className="aspect-[16/9] w-full"
+                    sizes="(min-width: 640px) 40vw, 100vw"
+                  />
                   <div className="p-6">
                     <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600">
                       <Icon className="h-5 w-5" aria-hidden="true" strokeWidth={1.7} />

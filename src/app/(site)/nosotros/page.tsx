@@ -73,8 +73,8 @@ export default function AboutPage() {
             <h2>Atención personalizada</h2>
             <p>
               Cada hogar es distinto: un balcón en un piso alto no es lo mismo que una ventana de
-              casa, y un hogar con niños pequeños tiene necesidades distintas a uno con mascotas. Por
-              eso conversamos caso a caso, por WhatsApp y en la visita.
+              casa, y un hogar con niños pequeños tiene necesidades distintas a uno con mascotas.
+              Por eso conversamos caso a caso, por WhatsApp y en la visita.
             </p>
 
             <h2>Nuestro compromiso</h2>

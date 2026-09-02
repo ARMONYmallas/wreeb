@@ -7,7 +7,13 @@ import { Sheet } from '@/components/ui/Sheet';
 import { Input, Select } from '@/components/ui/Field';
 import { addDays, todayInChile } from '@/lib/date';
 
-const REASONS = ['Vacaciones', 'Feriado', 'Agenda completa', 'Trabajo fuera de Santiago', 'Personal'];
+const REASONS = [
+  'Vacaciones',
+  'Feriado',
+  'Agenda completa',
+  'Trabajo fuera de Santiago',
+  'Personal',
+];
 
 export function BlockRangeSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const today = todayInChile();

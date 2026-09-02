@@ -29,7 +29,14 @@ export function PhotoSlot({
   if (src && alt) {
     return (
       <div className={cn('relative overflow-hidden bg-surface', className)}>
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className="object-cover"
+        />
       </div>
     );
   }
@@ -68,7 +75,16 @@ function MeshGraphic({ variant }: { variant: 'balcony' | 'window' | 'terrace' | 
 
       {variant === 'window' && (
         <>
-          <rect x="58" y="70" width="284" height="360" rx="6" fill="#ffffff" stroke="#c9d8d1" strokeWidth="3" />
+          <rect
+            x="58"
+            y="70"
+            width="284"
+            height="360"
+            rx="6"
+            fill="#ffffff"
+            stroke="#c9d8d1"
+            strokeWidth="3"
+          />
           <path d="M200 70v360M58 250h284" stroke="#c9d8d1" strokeWidth="3" />
           <rect x="58" y="70" width="284" height="360" rx="6" fill={`url(#mesh-${variant})`} />
         </>

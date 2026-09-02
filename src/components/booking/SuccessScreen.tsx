@@ -27,6 +27,8 @@ export function SuccessScreen({ result }: { result: BookingResult }) {
   useEffect(() => {
     // Evita que el usuario reenvíe el formulario con el botón atrás.
     window.history.replaceState(null, '', '/agendar');
+    // Si venía con la página desplazada, la confirmación se ve desde arriba.
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }, []);
 
   const rows = [

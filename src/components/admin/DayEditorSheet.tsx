@@ -55,7 +55,9 @@ export function DayEditorSheet({
   };
 
   const relative = relativeDayLabel(date);
-  const subtitle = relative ? `${relative}, ${formatLongDate(date)}` : capitalize(formatLongDate(date));
+  const subtitle = relative
+    ? `${relative}, ${formatLongDate(date)}`
+    : capitalize(formatLongDate(date));
   // "de hoy" / "de mañana" / "del viernes 18 de septiembre"
   const sheetTitle = relative
     ? `Disponibilidad de ${relative.toLowerCase()}`
@@ -86,7 +88,10 @@ export function DayEditorSheet({
                 run(() =>
                   customizeDay(
                     date,
-                    dayRows.map((r) => ({ slotId: r.slot_id, isActive: draft[r.slot_id] ?? false })),
+                    dayRows.map((r) => ({
+                      slotId: r.slot_id,
+                      isActive: draft[r.slot_id] ?? false,
+                    })),
                   ),
                 )
               }

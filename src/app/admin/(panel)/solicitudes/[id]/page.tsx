@@ -143,9 +143,7 @@ function describeEvent(event: {
   if (event.type === 'rescheduled') return 'Visita reprogramada.';
   if (event.type === 'details_updated') return 'Se actualizaron los datos de la visita.';
   if (event.type === 'status_changed') {
-    const to = event.to_status
-      ? STATUS_LABELS[event.to_status as keyof typeof STATUS_LABELS]
-      : '—';
+    const to = event.to_status ? STATUS_LABELS[event.to_status as keyof typeof STATUS_LABELS] : '—';
     const from = event.from_status
       ? STATUS_LABELS[event.from_status as keyof typeof STATUS_LABELS]
       : null;

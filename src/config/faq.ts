@@ -49,7 +49,9 @@ export const FAQ_ITEMS: FaqItem[] = [
     question: '¿Qué puede deteriorar una malla?',
     answer: `Influyen varios factores: ${business.maintenance.factors
       .map((f) => f.toLowerCase())
-      .join(', ')}. Por eso una revisión en terreno es la forma más confiable de conocer su estado actual.`,
+      .join(
+        ', ',
+      )}. Por eso una revisión en terreno es la forma más confiable de conocer su estado actual.`,
     category: 'mantenimiento',
   },
   {
@@ -103,6 +105,6 @@ export const FAQ_ITEMS: FaqItem[] = [
 ];
 
 /** Sólo las preguntas con respuesta confirmada entran al JSON-LD. */
-export const FAQ_FOR_SCHEMA = FAQ_ITEMS.filter(
-  (item): item is FaqItem & { answer: string } => Boolean(item.answer),
+export const FAQ_FOR_SCHEMA = FAQ_ITEMS.filter((item): item is FaqItem & { answer: string } =>
+  Boolean(item.answer),
 );
