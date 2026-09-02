@@ -1,0 +1,258 @@
+@import 'tailwindcss';
+
+/* ===========================================================================
+   ARMONY · Sistema de diseño
+   Blanco, verde ARMONY, gris muy claro y grafito. Mucho aire, bordes suaves,
+   sombras mínimas. Sin neón, sin glassmorphism, sin gradientes fuertes.
+   El verde es configurable: al recibir el logo oficial, basta ajustar
+   --color-brand-* aquí.
+   =========================================================================== */
+
+@theme {
+  --color-brand-50: #f0f7f4;
+  --color-brand-100: #dcede5;
+  --color-brand-200: #badccc;
+  --color-brand-300: #8cc4ac;
+  --color-brand-400: #57a587;
+  --color-brand-500: #2f8768;
+  --color-brand-600: #1e6c52;
+  --color-brand-700: #185643;
+  --color-brand-800: #144437;
+  --color-brand-900: #11382e;
+
+  --color-ink: #16211d;
+  --color-ink-soft: #35443e;
+  --color-muted: #5b6b65;
+  /* Aclarado lo justo para mantener 4.5:1 sobre blanco y sobre las superficies. */
+  --color-muted-soft: #61716b;
+  --color-line: #e5eae8;
+  --color-line-strong: #d3dbd8;
+  --color-surface: #f7f9f8;
+  --color-surface-2: #eef3f1;
+
+  --font-sans:
+    var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-display:
+    var(--font-display), var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    Roboto, sans-serif;
+
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.75rem;
+
+  --shadow-soft: 0 1px 2px rgb(22 33 29 / 0.04), 0 8px 24px -12px rgb(22 33 29 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(22 33 29 / 0.05), 0 18px 40px -20px rgb(22 33 29 / 0.22);
+
+  --breakpoint-xs: 22.5rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+
+  body {
+    background-color: #ffffff;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Foco visible y consistente en todo el sitio (accesibilidad). */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-600);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Evita que el zoom automático de iOS salte al enfocar un input. */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  /* El contenido nunca queda tapado por la barra fija móvil. */
+  ::selection {
+    background: var(--color-brand-100);
+    color: var(--color-brand-900);
+  }
+}
+
+@layer components {
+  .container-page {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+    max-width: 75rem;
+  }
+
+  @media (min-width: 640px) {
+    .container-page {
+      padding-inline: 2rem;
+    }
+  }
+
+  .section {
+    padding-block: 3.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section {
+      padding-block: 5.5rem;
+    }
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-brand-700);
+  }
+
+  .prose-armony p {
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  .prose-armony h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-ink);
+  }
+
+  .prose-armony h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-ink);
+  }
+
+  .prose-armony p + p {
+    margin-top: 1rem;
+  }
+
+  .prose-armony ul {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  .prose-armony li {
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .prose-armony li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6875rem;
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 9999px;
+    background: var(--color-brand-400);
+  }
+
+  .prose-armony a {
+    color: var(--color-brand-700);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+@layer utilities {
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Reserva el alto de la barra fija móvil para no tapar contenido. */
+  .pb-mobile-bar {
+    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  @media (min-width: 1024px) {
+    .pb-mobile-bar {
+      padding-bottom: 0;
+    }
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .animate-rise {
+    animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .animate-fade {
+    animation: fade 0.3s ease both;
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
