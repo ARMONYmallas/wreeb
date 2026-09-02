@@ -4,6 +4,7 @@ import { business, displayPhone, isEmailConfigured, isWhatsAppConfigured } from 
 import { FOOTER_LEGAL, FOOTER_SERVICES, MAIN_NAV } from '@/config/navigation';
 import { GENERAL_MESSAGE, whatsappLink } from '@/lib/whatsapp';
 import { Logo } from './Logo';
+import { PhoneLink } from './PhoneLink';
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -74,13 +75,14 @@ export function Footer() {
               )}
               {phone && isWhatsAppConfigured() && (
                 <li>
-                  <a
-                    href={`tel:+${business.contact.whatsapp}`}
+                  <PhoneLink
+                    phone={business.contact.whatsapp}
+                    location="footer"
                     className="inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-brand-700"
                   >
                     <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
                     {phone}
-                  </a>
+                  </PhoneLink>
                 </li>
               )}
               {isEmailConfigured() && (
