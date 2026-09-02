@@ -68,9 +68,15 @@ export function WeeklyScheduleEditor({
         {WEEK_ORDER.map((day) => {
           const activeCount = activeSlots.filter((s) => isActive(day, s.id)).length;
           return (
-            <section key={day} className="rounded-2xl border border-line bg-white p-4">
+            <section
+              key={day}
+              aria-labelledby={`dia-${day}`}
+              className="rounded-2xl border border-line bg-white p-4"
+            >
               <div className="flex items-baseline justify-between">
-                <h3 className="font-semibold text-ink">{DAY_NAMES[day]}</h3>
+                <h3 id={`dia-${day}`} className="font-semibold text-ink">
+                  {DAY_NAMES[day]}
+                </h3>
                 <p className="text-xs font-medium text-muted">
                   {activeCount === 0
                     ? 'No disponible'

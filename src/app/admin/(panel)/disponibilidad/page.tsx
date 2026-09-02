@@ -64,21 +64,21 @@ export default async function AvailabilityPage({
       {tab === 'calendario' && <AvailabilityCalendar month={month} rows={rows} />}
 
       {tab === 'habitual' && (
-        <section>
+        <div>
           <h2 className="text-lg font-semibold text-ink">Horario habitual de la semana</h2>
           <div className="mt-4">
             <WeeklyScheduleEditor slots={slots} weekly={weekly} />
           </div>
-        </section>
+        </div>
       )}
 
       {tab === 'horarios' && (
-        <section>
+        <div>
           <h2 className="text-lg font-semibold text-ink">Bloques horarios</h2>
           <div className="mt-4">
             <TimeSlotsEditor slots={slots} />
           </div>
-        </section>
+        </div>
       )}
     </div>
   );

@@ -23,7 +23,8 @@
   --color-ink: #16211d;
   --color-ink-soft: #35443e;
   --color-muted: #5b6b65;
-  --color-muted-soft: #7d8b86;
+  /* Aclarado lo justo para mantener 4.5:1 sobre blanco y sobre las superficies. */
+  --color-muted-soft: #61716b;
   --color-line: #e5eae8;
   --color-line-strong: #d3dbd8;
   --color-surface: #f7f9f8;
