@@ -1,16 +1,16 @@
 import type { Metadata } from 'next';
-import { requireAdmin } from '@/lib/admin/auth';
-import { AdminShell } from '@/components/admin/AdminShell';
 
 export const metadata: Metadata = {
   title: 'Panel · ARMONY',
   robots: { index: false, follow: false },
 };
 
-/** Todo el panel se renderiza siempre al día: nunca con datos cacheados. */
-export const dynamic = 'force-dynamic';
-
-export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const admin = await requireAdmin();
-  return <AdminShell adminName={admin.fullName ?? admin.email}>{children}</AdminShell>;
+/**
+ * Contenedor de todo lo que cuelga de /admin, incluido el inicio de sesión.
+ * A propósito NO comprueba la sesión aquí: si lo hiciera, /admin/login
+ * heredaría el guardián y quedaría en un bucle de redirecciones.
+ * La protección vive en el grupo (panel).
+ */
+export default function AdminRootLayout({ children }: { children: React.ReactNode }) {
+  return <>{children}</>;
 }

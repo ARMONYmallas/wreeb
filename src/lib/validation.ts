@@ -36,7 +36,7 @@ const nameSchema = z
 const phoneSchema = z
   .string()
   .trim()
-  .min(8, 'Escribe tu número de WhatsApp')
+  .min(1, 'Escribe tu número de WhatsApp')
   .transform((v, ctx) => {
     const normalized = normalizePhone(v);
     if (!normalized) {
@@ -88,7 +88,9 @@ export const appointmentSchema = z
     phone: phoneSchema,
     email: emailSchema,
     customerNotes: z.string().trim().max(500).optional().or(z.literal('').transform(() => undefined)),
-    consent: z.literal(true),
+    consent: z.literal(true, {
+      errorMap: () => ({ message: 'Necesitamos tu autorización para gestionar la solicitud' }),
+    }),
     /** Campo trampa: los bots lo rellenan, las personas no lo ven. */
     website: z.string().max(0).optional().or(z.literal('')),
     /** Milisegundos que el usuario tardó en completar el formulario. */
@@ -170,7 +172,7 @@ export const bookingFormSchema = z.object({
   phone: z
     .string()
     .trim()
-    .min(8, 'Escribe tu número de WhatsApp')
+    .min(1, 'Escribe tu número de WhatsApp')
     .refine((v) => normalizePhone(v) !== null, 'Revisa el número, por ejemplo +56 9 1234 5678'),
   email: z
     .string()

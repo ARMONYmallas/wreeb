@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { CalendarDays, Lock } from 'lucide-react';
 import { agendaRange, getAdminAvailability, listAppointments } from '@/lib/admin/queries';
-import { formatLongDate, formatTime, relativeDayLabel, todayInChile } from '@/lib/date';
+import { addDays, formatLongDate, formatTime, relativeDayLabel, todayInChile } from '@/lib/date';
 import { APPOINTMENT_STATUSES, type AppointmentStatus, type AppointmentWithSlot } from '@/types';
 import { AppointmentCard } from '@/components/admin/AppointmentCard';
 import { EmptyState, PageHeader } from '@/components/admin/PageHeader';
@@ -60,14 +60,14 @@ export default async function AgendaPage({
     byDay.set(appointment.preferred_date, list);
   }
 
+  const today = todayInChile();
+
   const availabilityByDay = new Map<string, AdminAvailabilityRow[]>();
   for (const row of availability) {
     const list = availabilityByDay.get(row.day) ?? [];
     list.push(row);
     availabilityByDay.set(row.day, list);
   }
-
-  const today = todayInChile();
 
   return (
     <div className="flex flex-col gap-6">
@@ -101,11 +101,18 @@ export default async function AgendaPage({
             const dayAppointments = byDay.get(day) ?? [];
             const daySlots = availabilityByDay.get(day) ?? [];
             const blocked = daySlots.length > 0 && daySlots.every((s) => s.day_blocked);
+            const openSlots = daySlots.filter((s) => s.is_available);
 
-            // Días sin visitas ni bloques abiertos no aportan nada a la lista.
-            if (dayAppointments.length === 0 && !blocked && daySlots.every((s) => !s.is_available)) {
-              return null;
-            }
+            // Un día pasado sin visitas ya no aporta nada.
+            if (day < today && dayAppointments.length === 0) return null;
+            // Tampoco un día futuro sin visitas ni bloques abiertos.
+            if (dayAppointments.length === 0 && !blocked && openSlots.length === 0) return null;
+
+            // El detalle bloque a bloque sólo donde importa: días con visitas,
+            // hoy y mañana. El resto se resume en una línea para que la agenda
+            // siga siendo escaneable en el celular.
+            const detailed =
+              dayAppointments.length > 0 || day === today || day === addDays(today, 1);
 
             return (
               <section key={day}>
@@ -119,6 +126,13 @@ export default async function AgendaPage({
                 </h2>
 
                 {/* Resumen por bloque: lo primero que se quiere ver en el celular. */}
+                {!detailed && !blocked ? (
+                  <p className="mt-3 rounded-xl border border-line bg-white px-4 py-2.5 text-sm text-muted">
+                    {openSlots.length} {openSlots.length === 1 ? 'bloque disponible' : 'bloques disponibles'}
+                    {' · '}
+                    {openSlots.map((s) => formatTime(s.start_time)).join(', ')}
+                  </p>
+                ) : (
                 <ul className="mt-3 flex flex-col gap-1.5">
                   {blocked ? (
                     <li className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-800">
@@ -148,13 +162,14 @@ export default async function AgendaPage({
                               ? 'Bloqueado'
                               : count === 0
                                 ? `Sin solicitudes · ${slot.capacity} ${slot.capacity === 1 ? 'cupo' : 'cupos'}`
-                                : `${count} de ${slot.capacity} ${count === 1 ? 'solicitud' : 'solicitudes'}`}
+                                : `${count} de ${slot.capacity} ${slot.capacity === 1 ? 'cupo' : 'cupos'} usado${count === 1 ? '' : 's'}`}
                           </span>
                         </li>
                       );
                     })
                   )}
                 </ul>
+                )}
 
                 {dayAppointments.length > 0 && (
                   <div className="mt-3 flex flex-col gap-2.5">

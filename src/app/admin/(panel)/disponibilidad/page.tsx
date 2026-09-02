@@ -11,8 +11,8 @@ export const dynamic = 'force-dynamic';
 
 const TABS = [
   { id: 'calendario', label: 'Calendario' },
-  { id: 'habitual', label: 'Horario habitual' },
-  { id: 'horarios', label: 'Horarios' },
+  { id: 'habitual', label: 'Semana' },
+  { id: 'horarios', label: 'Bloques' },
 ] as const;
 
 type TabId = (typeof TABS)[number]['id'];
@@ -50,7 +50,7 @@ export default async function AvailabilityPage({
                 href={`/admin/disponibilidad?tab=${item.id}${item.id === 'calendario' ? `&mes=${month.slice(0, 7)}` : ''}`}
                 aria-current={tab === item.id ? 'page' : undefined}
                 className={cn(
-                  'flex h-10 items-center justify-center rounded-full px-2 text-center text-[0.8125rem] font-semibold transition-colors sm:text-sm',
+                  'flex h-10 items-center justify-center rounded-full px-2 text-center text-[0.8125rem] font-semibold whitespace-nowrap transition-colors sm:text-sm',
                   tab === item.id ? 'bg-brand-600 text-white' : 'text-ink-soft hover:bg-surface',
                 )}
               >
@@ -62,8 +62,24 @@ export default async function AvailabilityPage({
       </nav>
 
       {tab === 'calendario' && <AvailabilityCalendar month={month} rows={rows} />}
-      {tab === 'habitual' && <WeeklyScheduleEditor slots={slots} weekly={weekly} />}
-      {tab === 'horarios' && <TimeSlotsEditor slots={slots} />}
+
+      {tab === 'habitual' && (
+        <section>
+          <h2 className="text-lg font-semibold text-ink">Horario habitual de la semana</h2>
+          <div className="mt-4">
+            <WeeklyScheduleEditor slots={slots} weekly={weekly} />
+          </div>
+        </section>
+      )}
+
+      {tab === 'horarios' && (
+        <section>
+          <h2 className="text-lg font-semibold text-ink">Bloques horarios</h2>
+          <div className="mt-4">
+            <TimeSlotsEditor slots={slots} />
+          </div>
+        </section>
+      )}
     </div>
   );
 }

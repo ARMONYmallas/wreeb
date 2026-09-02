@@ -21,12 +21,15 @@ export async function POST(request: Request) {
     );
   }
 
-  // ── 1. Límite de peticiones ───────────────────────────────────────────────
+  // ── 1. Límite de peticiones (primer nivel: ráfagas) ───────────────────────
+  // Amplio a propósito: equivocarse escribiendo el teléfono no puede dejar a
+  // una persona sin poder agendar. El límite estricto va sobre las solicitudes
+  // realmente creadas, más abajo.
   const ip = clientIp(request);
-  const allowed = await checkRateLimit(`appointments:${ip}`, 5, 60 * 60);
-  if (!allowed) {
+  const withinBurst = await checkRateLimit(`solicitudes:intentos:${ip}`, 30, 60 * 60);
+  if (!withinBurst) {
     return NextResponse.json(
-      { error: 'Recibimos varias solicitudes desde este dispositivo. Escríbenos por WhatsApp y te ayudamos.' },
+      { error: 'Recibimos demasiadas peticiones desde este dispositivo. Escríbenos por WhatsApp y te ayudamos.' },
       { status: 429 },
     );
   }
@@ -76,9 +79,18 @@ export async function POST(request: Request) {
   const input = parsed.data;
   const region = REGION_BY_CODE.get(input.regionCode)!;
 
+  // ── 5. Límite de solicitudes efectivamente creadas ────────────────────────
+  const withinCreateLimit = await checkRateLimit(`solicitudes:creadas:${ip}`, 5, 60 * 60);
+  if (!withinCreateLimit) {
+    return NextResponse.json(
+      { error: 'Ya enviaste varias solicitudes. Escríbenos por WhatsApp y te ayudamos directamente.' },
+      { status: 429 },
+    );
+  }
+
   const supabase = createAdminSupabase();
 
-  // ── 5. Creación transaccional ─────────────────────────────────────────────
+  // ── 6. Creación transaccional ─────────────────────────────────────────────
   // La disponibilidad se vuelve a validar dentro de la transacción, con un
   // bloqueo sobre fecha:bloque. Dos personas no pueden tomar el último cupo.
   const { data, error } = await supabase.rpc('create_appointment', {
@@ -118,7 +130,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'No pudimos registrar tu solicitud.' }, { status: 500 });
   }
 
-  // ── 6. Desde aquí la solicitud YA está guardada ───────────────────────────
+  // ── 7. Desde aquí la solicitud YA está guardada ───────────────────────────
   // Nada de lo que siga puede hacer que se pierda.
   const photos = form.getAll('photos').filter((f): f is File => f instanceof File && f.size > 0);
   let photoCount = 0;
@@ -145,7 +157,7 @@ export async function POST(request: Request) {
       }
     : null;
 
-  // ── 7. Notificaciones (nunca bloquean ni pierden la solicitud) ────────────
+  // ── 8. Notificaciones (nunca bloquean ni pierden la solicitud) ────────────
   try {
     await sendNewAppointmentEmails({
       appointmentId: created.id,

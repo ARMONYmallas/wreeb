@@ -6,11 +6,11 @@ import type { BookingFormValues } from '@/lib/validation';
 import type { ServiceType, SpaceType } from '@/types';
 import { OptionCard } from './OptionCard';
 
-const SPACES: { value: SpaceType; title: string; description: string; icon: typeof AppWindow }[] = [
-  { value: 'ventanas', title: 'Ventanas', description: 'Una o varias ventanas del hogar', icon: AppWindow },
-  { value: 'balcon', title: 'Balcón', description: 'Cierre de balcón en altura', icon: Building2 },
-  { value: 'terraza', title: 'Terraza', description: 'Terraza o patio en altura', icon: Fence },
-  { value: 'varios', title: 'Varios espacios', description: 'Más de un lugar de la casa', icon: LayoutGrid },
+const SPACES: { value: SpaceType; title: string; icon: typeof AppWindow }[] = [
+  { value: 'ventanas', title: 'Ventanas', icon: AppWindow },
+  { value: 'balcon', title: 'Balcón', icon: Building2 },
+  { value: 'terraza', title: 'Terraza', icon: Fence },
+  { value: 'varios', title: 'Varios espacios', icon: LayoutGrid },
 ];
 
 const SERVICES: { value: ServiceType; title: string; icon: typeof Hammer }[] = [
@@ -29,13 +29,14 @@ export function StepOne() {
   return (
     <div className="flex flex-col gap-8">
       <div role="radiogroup" aria-label="Espacio a proteger">
-        <div className="grid gap-2.5 sm:grid-cols-2">
+        {/* 2×2 en móvil: las cuatro opciones caben sin scroll. */}
+        <div className="grid grid-cols-2 gap-2.5">
           {SPACES.map((s) => (
             <OptionCard
               key={s.value}
               icon={s.icon}
               title={s.title}
-              description={s.description}
+              tile
               selected={spaceType === s.value}
               onClick={() =>
                 setValue('spaceType', s.value, { shouldValidate: true, shouldDirty: true })

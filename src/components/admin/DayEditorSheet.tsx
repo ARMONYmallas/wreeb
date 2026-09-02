@@ -55,7 +55,11 @@ export function DayEditorSheet({
   };
 
   const relative = relativeDayLabel(date);
-  const title = relative ? `${relative}, ${formatLongDate(date)}` : capitalize(formatLongDate(date));
+  const subtitle = relative ? `${relative}, ${formatLongDate(date)}` : capitalize(formatLongDate(date));
+  // "de hoy" / "de mañana" / "del viernes 18 de septiembre"
+  const sheetTitle = relative
+    ? `Disponibilidad de ${relative.toLowerCase()}`
+    : `Disponibilidad del ${formatLongDate(date)}`;
 
   const bookedTotal = dayRows.reduce((sum, r) => sum + r.booked, 0);
 
@@ -63,8 +67,8 @@ export function DayEditorSheet({
     <Sheet
       open
       onClose={onClose}
-      title={`Disponibilidad del ${relative ? relative.toLowerCase() : formatLongDate(date)}`}
-      description={title}
+      title={sheetTitle}
+      description={subtitle}
       footer={
         mode === 'custom' ? (
           <div className="flex gap-2.5">
@@ -124,7 +128,7 @@ export function DayEditorSheet({
           <OptionRow
             icon={SlidersHorizontal}
             title="Personalizar este día"
-            description="Elige qué bloques quedan disponibles sólo hoy."
+            description="Elige qué bloques quedan disponibles sólo en esta fecha."
             active={isCustom}
             disabled={pending}
             onClick={() => setMode('custom')}

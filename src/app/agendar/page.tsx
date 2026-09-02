@@ -15,6 +15,10 @@ export const metadata: Metadata = buildMetadata({
   noindex: true,
 });
 
+/**
+ * El agendamiento vive fuera del grupo `(site)` a propósito: no lleva
+ * navegación ni pie de página. En esta pantalla la única tarea es agendar.
+ */
 export default function BookingPage() {
   return (
     <div className="min-h-dvh bg-white">
