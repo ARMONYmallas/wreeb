@@ -50,7 +50,13 @@ export async function listAppointments(filters: AppointmentFilters = {}) {
   if (filters.to) query = query.lte('preferred_date', filters.to);
 
   if (filters.search) {
-    const term = filters.search.trim().replace(/[%,()]/g, '');
+    // Se quitan los caracteres con significado en la gramática de filtros
+    // (coma, paréntesis, comodines) para que el término no pueda añadir
+    // cláusulas propias, y se acota el largo.
+    const term = filters.search
+      .trim()
+      .replace(/[%,()*\\]/g, '')
+      .slice(0, 60);
     if (term) {
       const digits = term.replace(/\D/g, '');
       const clauses = [
